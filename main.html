@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <script
+      src="https://kit.fontawesome.com/25bc89a4e6.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="main">
+      <form name="form">
+        <input
+          class="textdisplay"
+          name="textdisplay"
+          placeholder="0"
+          style="overflow: scroll"
+          disabled
+        />
+      </form>
+      <table>
+        <tr>
+          <td>
+            <div class="button" id="clean" onclick="clean()">
+              <i class="fas fa-trash-alt"></i>
+            </div>
+          </td>
+          <td>
+            <div class="button none" onclick="back()">
+              <i class="fas fa-backspace"></i>
+            </div>
+          </td>
+          <td>
+            <div class="button none" onclick="opt('/')">
+              <i class="fas fa-divide"></i>
+            </div>
+          </td>
+          <td>
+            <div class="button none" onclick="opt('*')">
+              <i class="fas fa-times"></i>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button none" onclick="insert(7)">
+              <div class="inner">7</div>
+            </div>
+          </td>
+          <td>
+            <div class="button none" onclick="insert(8)">
+              <div class="inner">8</div>
+            </div>
+          </td>
+          <td>
+            <div class="button none" onclick="insert(9)">
+              <div class="inner">9</div>
+            </div>
+          </td>
+          <td>
+            <div class="button none" onclick="insert('-')">
+              <i class="fas fa-minus"></i>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button none" onclick="insert(4)">
+              <div class="inner">4</div>
+            </div>
+          </td>
+          <td>
+            <div class="button none" onclick="insert(5)">
+              <div class="inner">5</div>
+            </div>
+          </td>
+          <td>
+            <div class="button none" onclick="insert(6)">
+              <div class="inner">6</div>
+            </div>
+          </td>
+          <td rowspan="2" id="plus">
+            <div id="first" class="button none" onclick="opt('+')">
+              <i class="fas fa-plus"></i>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="button none" onclick="insert(1)">
+              <div class="inner">1</div>
+            </div>
+          </td>
+          <td>
+            <div class="button none" onclick="insert(2)">
+              <div class="inner">2</div>
+            </div>
+          </td>
+          <td>
+            <div class="button none" onclick="insert(3)">
+              <div class="inner">3</div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="zero" class="button none" onclick="zero()">
+              <div class="inner">0</div>
+            </div>
+          </td>
+          <td>
+            <div class="button none" onclick="insert('.')">
+              <i class="fas fa-caret-down"></i>
+            </div>
+          </td>
+          <td colspan="2" id="equal">
+            <div id="second" class="button none" onclick="equal()">
+              <i class="fas fa-equals"></i>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        background-image: linear-gradient(
+          to bottom,
+          #ffe9ef,
+          #ead1da,
+          #d6bac5,
+          #c1a3b1,
+          #ac8d9e,
+          #9c7f91,
+          #8d7184,
+          #7e6377,
+          #71586c,
+          #644e61,
+          #574457,
+          #4b3a4c
+        );
+        background-size: cover;
+      }
+
+      .main {
+        width: 400px;
+        height: 600px;
+        padding: 0;
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        border-radius: 30px;
+        background: #9caaa8;
+        box-shadow: inset 0 -5px 10px 5px #74807d;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .textdisplay {
+        width: 90%;
+        height: 90px;
+        margin: 24px auto 15px auto;
+        padding: 0 5px 0 0;
+        right: 0;
+        left: 0;
+        position: absolute;
+        border-radius: 15px;
+        border: none;
+        font-size: 70px;
+        text-align: right;
+        font-family: "VT323", monospace;
+        background: #fde5f1;
+        color: #000000;
+        box-shadow: inset 0 -5px 10px 2px #b0c5ba, 0 5px 10px 0px #76beb2;
+      }
+
+      table {
+        margin: 0 5px 23px 23px;
+        bottom: 0;
+        position: absolute;
+      }
+
+      #clean {
+        background: #ff0000;
+        color: #000000;
+        box-shadow: inset 0 5px 10px 0 #c42424, inset 0 -5px 10px 3px #ff0000,
+          0 5px 10px 0px #ff0000;
+      }
+
+      #clean:active {
+        box-shadow: inset 0 -5px 10px 0 #ffbebe, inset 0 5px 10px 3px #f76767;
+      }
+
+      #plus,
+      #first {
+        height: 164px;
+      }
+
+      #equal,
+      #second {
+        width: 164px;
+      }
+
+      #second {
+        background: #2fff00;
+        color: #000000;
+        box-shadow: inset 0 5px 10px 0 #26a309, inset 0 -5px 10px 3px #50a542,
+          0 5px 10px 0px #246824;
+      }
+
+      #second:active {
+        box-shadow: inset 0 -5px 10px 0 #66ff00, inset 0 5px 10px 3px #8bff3e,
+          0 0px 10px 0px #3b9202;
+      }
+
+      .button {
+        width: 76px;
+        height: 76px;
+        left: 0;
+        right: 0;
+        margin: 4px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 50px;
+        font-weight: bold;
+        border: none;
+        border-radius: 18px;
+        font-family: "VT323", monospace;
+        background: #fddfee;
+        color: #000000;
+        box-shadow: inset 0 5px 10px 0 #e0b4ca, inset 0 -5px 10px 3px #caa0b6,
+          0 5px 10px 0px #a3748c;
+      }
+
+      .main table tr td .button:active {
+        box-shadow: inset 0 -5px 10px 0 #f1d6f1, inset 0 5px 10px 3px #d8b3d8,
+          0 0px 10px 0px #ca9fca;
+      }
+
+      .inner {
+        width: 100%;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        margin: auto 0 auto 0;
+        padding: 0;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        transform: translateY(3px);
+      }
+
+      .main table tr td .button .inner:active {
+        transform: translateY(3px) scale(1.1);
+      }
+    </style>
+
+    <script>
+      function insert(num) {
+        var a = document.form.textdisplay;
+        a.value += num;
+      }
+
+      function opt(amd) {
+        var view = document.form.textdisplay;
+        if (view.value != "") {
+          view.value += amd;
+        }
+      }
+      function zero() {
+        var view = document.form.textdisplay;
+        if (view.value != "") {
+          view.value += "0";
+        }
+      }
+
+      function equal() {
+        var button = document.getElementsByClassName("none");
+        var a = document.form.textdisplay;
+        var exp = a.value;
+
+        if (exp) {
+          try {
+            a.value = eval(exp);
+          } catch (e) {
+            document.form.textdisplay.value = "Syntax Error!";
+            none();
+          }
+        }
+        if (a.value == 0) {
+          a.value = "";
+        }
+        if (a.value == "Infinity") {
+          document.form.textdisplay.value = "Can't divide!";
+          none();
+        }
+      }
+
+      function clean() {
+        document.form.textdisplay.value = "";
+      }
+
+      function back() {
+        var exp = document.form.textdisplay.value;
+        document.form.textdisplay.value = exp.substring(0, exp.length - 1);
+      }
+    </script>
+  </body>
+</html>
